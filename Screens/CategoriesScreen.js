@@ -1,13 +1,12 @@
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import { Button, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Header from '../Components/Header'
 import Searcher from '../Components/Searcher'
 import { colors } from '../Styles/colors'
 import List from '../Components/List'
 import { CATEGORIES } from '../Data/categories';
 import { Entypo } from '@expo/vector-icons';
 
-const CategoriesScreen = ({handleCategory}) => {
+const CategoriesScreen = ({navigation}) => {
 
     const [input, setInput] = useState("")
     const [categoriesFilter, setCategoriesFilter] = useState(CATEGORIES)
@@ -15,7 +14,7 @@ const CategoriesScreen = ({handleCategory}) => {
     useEffect(()=> {
         if (input === "") setCategoriesFilter(CATEGORIES)
         else {
-            
+            console.log("Se ejecuta el efecto");
             const categoriasFiltradas = CATEGORIES.filter(category => category.category.toLowerCase().includes(input.toLowerCase()))
             setCategoriesFilter(categoriasFiltradas)
         }
@@ -26,13 +25,15 @@ const CategoriesScreen = ({handleCategory}) => {
     }
 
     const handleSelectedCategory = (category) => {
+        navigation.push("Products", {
+            categoryId: category.id,
+            categoryTitle: category.category,
+        })
 
-        handleCategory(category)
     }
 
     return (
         <>
-            <Header />
             <View style={styles.container}>
                 <Searcher additionalStyles={{
                     backgroundColor: colors.lightBlue
@@ -44,7 +45,7 @@ const CategoriesScreen = ({handleCategory}) => {
                         style={styles.input}
                     />
                     <TouchableOpacity onPress={handleErase}>
-                        <Entypo name="erase" size={30} color="white" />
+                        <Entypo name="erase" size={30} color="black" />
                     </TouchableOpacity>
                 </Searcher>
                 <View style={styles.listContainer}>
@@ -68,11 +69,10 @@ const styles = StyleSheet.create({
         width: '80%',
         padding: 10,
         margin: 10,
-        backgroundColor: colors.white,
+        backgroundColor: 'black',
         borderRadius: 10,
-        color: 'black',
+        color: 'white',
         height: 50,
-        
     },
     listContainer:{
         flex: 1,
