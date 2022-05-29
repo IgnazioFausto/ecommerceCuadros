@@ -2,16 +2,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, TabRouter } from '@react-navigation/native';
-import CategoriesScreen from '../../Screens/CategoriesScreen';
-import ProductsScreen from '../../Screens/ProductsScreen';
-import DetailScreen from '../../Screens/DetailScreen';
-import { colors } from '../../Styles/colors';
+import CategoriesScreen from '../../../Screens/CategoriesScreen';
+import ProductsScreen from '../../../Screens/ProductsScreen';
+import DetailScreen from '../../../Screens/DetailScreen';
+import { colors } from '../../../Styles/colors';
+import Header from '../../../Components/Header';
 
 const Stack = createNativeStackNavigator();
 
-function MainNavigator() {
+function ShopNavigator() {
   return (
-    <NavigationContainer>
       <Stack.Navigator initialRouteName="Categories"
         screenOptions={{
           headerStyle: {
@@ -23,6 +23,7 @@ function MainNavigator() {
             fontSize: 28,
           },
           headerTitleAlign: "center",
+          
         }}
       >
         <Stack.Screen
@@ -57,10 +58,9 @@ function MainNavigator() {
           }
         />
       </Stack.Navigator>
-    </NavigationContainer>
   )
 }
 
-export default MainNavigator;
+export default ShopNavigator;
 
 const styles = StyleSheet.create({})

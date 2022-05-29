@@ -4,4 +4,5 @@ export const colors = {
     lightBlue: "#A8DADC",
     beige: "#F7FF93",
     white: "#FFFFFF",
+    shadowTab: "#A8DADC",
 }

@@ -55,7 +55,7 @@ const ProductsScreen = ({ category = { id: 1, category: "Ropa" }, navigation, ro
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <Searcher additionalStyles={{
-                        backgroundColor: colors.lightBlue
+                        backgroundColor: colors.regularBlue
                     }}>
                         <TextInput
                             value={input}
@@ -65,7 +65,7 @@ const ProductsScreen = ({ category = { id: 1, category: "Ropa" }, navigation, ro
                             placeholder="Ingrese producto a buscar"
                         />
                         <TouchableOpacity onPress={handleErase}>
-                            <Entypo name="erase" size={30} color="black" />
+                            <Entypo name="erase" size={30} color="white" />
                         </TouchableOpacity>
                     </Searcher>
                     <View style={styles.listContainer}>
@@ -95,9 +95,9 @@ const styles = StyleSheet.create({
         width: '80%',
         padding: 10,
         margin: 10,
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         borderRadius: 10,
-        color: 'white',
+        color: 'black',
         height: 50,
     },
     listContainer: {

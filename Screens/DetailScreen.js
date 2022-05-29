@@ -27,7 +27,7 @@ const DetailScreen = ({
 
     useEffect(()=> {
         const productSelected = PRODUCTS.find(product => product.id === productId);
-        console.log(productSelected);
+        
         setProduct(productSelected);
     }, [productId])
 
