@@ -1,106 +1,124 @@
-import { Button, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react';
-import Searcher from '../Components/Searcher';
-import { Entypo } from '@expo/vector-icons';
-import { PRODUCTS } from '../Data/products';
-import { colors } from '../Styles/colors';
-import List from '../Components/List';
+import {
+  Button,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Keyboard,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import Searcher from "../Components/Searcher";
+import { Entypo } from "@expo/vector-icons";
+import { PRODUCTS } from "../Data/products";
+import { colors } from "../Styles/colors";
+import List from "../Components/List";
+import { useDispatch, useSelector } from "react-redux";
+import { setProductSelected } from "../Features/products";
 
-const ProductsScreen = ({ category = { id: 1, category: "Ropa" }, navigation, route }) => {
+const ProductsScreen = ({
+  category = { id: 1, category: "Ropa" },
+  navigation,
+  route,
+}) => {
+  const [input, setInput] = useState("");
+  const [productsFiltered, setProductsFiltered] = useState([]);
+  const { productsByCategory } = useSelector((state) => state.products.value);
+  const dispatch = useDispatch();
 
-    const [input, setInput] = useState("");
-    const [initialProducts, setInitialProducts] = useState([])
-    const [productsFiltered, setProductsFiltered] = useState([])
+  const { categoryId } = route.params;
 
-    const {categoryId} = route.params
+  const handleErase = () => {
+    setInput("");
+  };
 
-    const handleErase = () => {
-        setInput("")
+  //Buscar productos según el input.
+  useEffect(() => {
+    if (productsByCategory.length !== 0) {
+      if (input === "") setProductsFiltered(productsByCategory);
+      else {
+        const productosFiltrados = productsByCategory.filter((product) =>
+          product.description.toLowerCase().includes(input.toLowerCase())
+        );
+        setProductsFiltered(productosFiltrados);
+      }
     }
+  }, [input, productsByCategory]);
 
-    //Buscar productos según el input.
-    useEffect(() => {
-        if (initialProducts.length !== 0) {
-            if (input === "") setProductsFiltered(initialProducts)
-            else {
-                const productosFiltrados = initialProducts.filter(product => product.description.toLowerCase().includes(input.toLowerCase()))
-                setProductsFiltered(productosFiltrados)
-            }
-        }
-    }, [input, initialProducts])
+  const handleDetailProduct = (product) => {
+    dispatch(setProductSelected(product.id));
+    navigation.navigate("Detail", {
+      productId: product.id,
+      productTitle: product.description,
+    });
+  };
 
-    //Realiza el filtro inicial de productos por categoría
-    useEffect(() => {
-        const productosIniciales = PRODUCTS.filter(product => product.category === categoryId)
-        setInitialProducts(productosIniciales);
-    }, [categoryId])
+  const handleBack = () => {
+    navigation.goBack();
+  };
 
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.keyboardAvoid}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Searcher
+            additionalStyles={{
+              backgroundColor: colors.regularBlue,
+            }}
+          >
+            <TextInput
+              value={input}
+              onChangeText={setInput}
+              keyboardType="default"
+              style={styles.input}
+              placeholder="Ingrese producto a buscar"
+            />
+            <TouchableOpacity onPress={handleErase}>
+              <Entypo name="erase" size={30} color="white" />
+            </TouchableOpacity>
+          </Searcher>
+          <View style={styles.listContainer}>
+            <List
+              data={productsFiltered}
+              itemType={"Producto"}
+              onPress={handleDetailProduct}
+            />
+            <Button title="Go back" onPress={handleBack} />
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+  );
+};
 
-    const handleDetailProduct = (product) => {
-        navigation.navigate("Detail",{
-            productId: product.id,
-            productTitle: product.description
-        })
-    }
-
-    const handleBack = () => {
-        navigation.goBack();
-    }
-
-    return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.keyboardAvoid}
-        >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View style={styles.container}>
-                    <Searcher additionalStyles={{
-                        backgroundColor: colors.regularBlue
-                    }}>
-                        <TextInput
-                            value={input}
-                            onChangeText={setInput}
-                            keyboardType="default"
-                            style={styles.input}
-                            placeholder="Ingrese producto a buscar"
-                        />
-                        <TouchableOpacity onPress={handleErase}>
-                            <Entypo name="erase" size={30} color="white" />
-                        </TouchableOpacity>
-                    </Searcher>
-                    <View style={styles.listContainer}>
-                        <List data={productsFiltered} itemType={"Producto"} onPress={handleDetailProduct} />
-                        <Button title="Go back" onPress={handleBack} />
-                    </View>
-                </View>
-            </TouchableWithoutFeedback>
-
-        </KeyboardAvoidingView>
-    )
-}
-
-export default ProductsScreen
+export default ProductsScreen;
 
 const styles = StyleSheet.create({
-    keyboardAvoid: {
-        flex: 1,
-    },
-    container: {
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-        flexDirection: 'column',
-    },
-    input: {
-        width: '80%',
-        padding: 10,
-        margin: 10,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        color: 'black',
-        height: 50,
-    },
-    listContainer: {
-        flex: 1,
-    }
-})
+  keyboardAvoid: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  input: {
+    width: "80%",
+    padding: 10,
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    color: "black",
+    height: 50,
+  },
+  listContainer: {
+    flex: 1,
+  },
+});

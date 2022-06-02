@@ -3,19 +3,27 @@ import React, { useEffect, useState } from 'react'
 import Searcher from '../Components/Searcher'
 import { colors } from '../Styles/colors'
 import List from '../Components/List'
-import { CATEGORIES } from '../Data/categories';
 import { Entypo } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import {CATEGORIES} from '../Data/categories'
+import { selectCategory } from '../Features/categories'
+import { setProductsByCategory } from '../Features/products'
 
 const CategoriesScreen = ({navigation}) => {
 
     const [input, setInput] = useState("")
-    const [categoriesFilter, setCategoriesFilter] = useState(CATEGORIES)
+    const [categoriesFilter, setCategoriesFilter] = useState()
+
+    const dispatch = useDispatch()
+
+    const {categories} = useSelector(state => state.categories.value)
+    
 
     useEffect(()=> {
-        if (input === "") setCategoriesFilter(CATEGORIES)
+        if (input === "") setCategoriesFilter(categories)
         else {
-            console.log("Se ejecuta el efecto");
-            const categoriasFiltradas = CATEGORIES.filter(category => category.category.toLowerCase().includes(input.toLowerCase()))
+            
+            const categoriasFiltradas = categories.filter(category => category.category.toLowerCase().includes(input.toLowerCase()))
             setCategoriesFilter(categoriasFiltradas)
         }
     }, [input])
@@ -25,6 +33,8 @@ const CategoriesScreen = ({navigation}) => {
     }
 
     const handleSelectedCategory = (category) => {
+        dispatch(setProductsByCategory(category.id))
+        dispatch(selectCategory(category.id))
         navigation.push("Products", {
             categoryId: category.id,
             categoryTitle: category.category,
