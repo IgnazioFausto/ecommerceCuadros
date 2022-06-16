@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import OrdersScreen from '../../../Screens/OrdersScreen';
 import { colors } from '../../../Styles/colors';
+import AuthScreen from '../../../Screens/AuthScreen';
 
 const Stack = createNativeStackNavigator();
 
-const OrdersStack = () => {
+const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName=""
         screenOptions={{
@@ -26,10 +26,10 @@ const OrdersStack = () => {
         }}
       >
         <Stack.Screen
-          name= "Orders"
-          component={OrdersScreen}
+          name= "auth"
+          component={AuthScreen}
           options={{
-            title: "Ordenes"
+            title: "Auth"
           }}
         >
         
@@ -39,6 +39,6 @@ const OrdersStack = () => {
   )
 }
 
-export default OrdersStack
+export default AuthStack;
 
 const styles = StyleSheet.create({})

@@ -10,7 +10,6 @@ const CategoryItem = ({category}) => {
 
   const {width, height} = useWindowDimensions();
 
-
   return (
     <View style={{...styles.container, 
       maxWidth: 0.43 * width,
@@ -28,16 +27,19 @@ const styles = {
   container: {
     width: 150,
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 0,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    padding: 15,
     backgroundColor: colors.regularBlue,
-    borderRadius: 0,
+    borderRadius: 5,
   },
   text: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: 'LatoRegular',
     color: 'white',
-    fontWeight: 'bold',
+    fontweight: 'bold',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 }

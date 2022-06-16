@@ -23,9 +23,9 @@ const styles = {
             width: 0,
             height: 6,
         },
-        shadowOpacity: 0.37,
+        shadowOpacity: 0.2,
         shadowRadius: 7.49,
-        elevation: 12,
-        borderRadius: 12,
+        elevation: 8,
+        borderRadius: 5,
     }
 }

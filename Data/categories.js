@@ -1,18 +1,18 @@
 export const CATEGORIES = [
     {
         id: 1,
-        category: "Abstractos"
+        category: "Renacimiento"
     },
     {
         id: 2,
-        category: "Figurativo"
+        category: "Art Pop"
     },
     {
         id: 3,
-        category: "Pop Art"
+        category: "Surrealismo"
     },
     {
         id: 4,
-        category: "Renacimiento"
+        category: "Expresionismo"
     }
 ]

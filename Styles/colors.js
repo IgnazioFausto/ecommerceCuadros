@@ -1,8 +1,7 @@
 export const colors = {
-    darkBlue: "#457B9D",
-    regularBlue: "#457B9D",
-    lightBlue: "#A8DADC",
-    beige: "#F7FF93",
-    white: "#FFFFFF",
-    shadowTab: "#A8DADC",
+    darkBlue: "#023047",
+    regularBlue: "#219EBC",
+    lightBlue: "#8ECAE6",
+    beige: "#FFB703",
+    shadowTab: "#7F5FF0",
 }

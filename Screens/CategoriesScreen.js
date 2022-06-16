@@ -1,28 +1,27 @@
 import { Button, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import Header from '../Components/Header'
 import Searcher from '../Components/Searcher'
 import { colors } from '../Styles/colors'
 import List from '../Components/List'
 import { Entypo } from '@expo/vector-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import {CATEGORIES} from '../Data/categories'
-import { selectCategory } from '../Features/categories'
-import { setProductsByCategory } from '../Features/products'
+import { useDispatch, useSelector } from 'react-redux'
+import { CATEGORIES } from '../Data/categories'
+import { selectCategory } from '../features/categories'
+import { setProductsByCategory } from '../features/products'
 
 const CategoriesScreen = ({navigation}) => {
 
     const [input, setInput] = useState("")
     const [categoriesFilter, setCategoriesFilter] = useState()
 
-    const dispatch = useDispatch()
-
     const {categories} = useSelector(state => state.categories.value)
-    
+    const dispatch = useDispatch();
+    // console.log(categories);
 
     useEffect(()=> {
         if (input === "") setCategoriesFilter(categories)
         else {
-            
             const categoriasFiltradas = categories.filter(category => category.category.toLowerCase().includes(input.toLowerCase()))
             setCategoriesFilter(categoriasFiltradas)
         }
@@ -34,7 +33,8 @@ const CategoriesScreen = ({navigation}) => {
 
     const handleSelectedCategory = (category) => {
         dispatch(setProductsByCategory(category.id))
-        dispatch(selectCategory(category.id))
+        dispatch(selectCategory(category.id));
+
         navigation.push("Products", {
             categoryId: category.id,
             categoryTitle: category.category,
@@ -46,7 +46,7 @@ const CategoriesScreen = ({navigation}) => {
         <>
             <View style={styles.container}>
                 <Searcher additionalStyles={{
-                    backgroundColor: colors.regularBlue
+                    backgroundColor: colors.lightBlue
                 }}>
                     <TextInput
                         value={input}
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
         width: '80%',
         padding: 10,
         margin: 10,
-        backgroundColor: colors.white,
-        borderRadius: 10,
+        backgroundColor: 'white',
+        borderRadius: 5,
         color: 'black',
         height: 50,
     },

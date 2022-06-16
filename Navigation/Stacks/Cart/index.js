@@ -19,7 +19,10 @@ const CartStack = () => {
             fontSize: 28,
           },
           headerTitleAlign: "center",
-         
+          // headerTransparent: true,
+          // header: () => {
+          //   return <Header/>
+          // }
         }}
       >
         <Stack.Screen
